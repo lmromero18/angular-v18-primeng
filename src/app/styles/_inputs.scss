@@ -1,0 +1,101 @@
+input {
+  @apply w-full h-standard-height font-fira-sans text-dark-900;
+
+  ::placeholder {
+    @apply text-input;
+  }
+}
+
+.p-inputtext.ng-dirty.ng-invalid {
+  @apply border border-danger shadow-none;
+}
+
+.p-dropdown.p-inputwrapper-filled.ng-dirty.ng-invalid {
+  @apply border border-danger;
+}
+
+p-dropdown .p-dropdown-label {
+  @apply font-fira-sans pt-2 text-dark-900;
+}
+
+p-multiselect .p-multiselect-label {
+  @apply font-fira-sans pt-2 text-dark-900;
+}
+
+p-multiselect .p-multiselect-label.p-placeholder {
+  @apply text-placeholder;
+}
+
+.p-multiselect-item-group,
+.p-dropdown-item-group {
+  @apply font-fira-sans text-dark-400 text-sm;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  @apply font-fira-sans text-dark-900;
+}
+
+.p-multiselect,
+.p-dropdown {
+  @apply w-full h-standard-height;
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+  @apply text-placeholder;
+}
+
+p-dropdown.ng-dirty.ng-invalid>.p-dropdown {
+  @apply border border-danger shadow-none;
+}
+
+/* Cambia el color del texto a $dark-900 cuando se selecciona un valor */
+.p-dropdown .p-dropdown-label-filled {
+  @apply text-dark-900;
+}
+
+.p-multiselect-label {
+  @apply font-fira-sans pt-2;
+}
+
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+  @apply p-0 mr-2 rounded-sm pl-1 pr-1 bg-primary-100;
+}
+
+.p-multiselect.p-multiselect-chip .p-multiselect-token .p-multiselect-token-icon {
+  @apply w-3.5 text-danger-500;
+}
+
+.p-password {
+  @apply w-full;
+}
+
+.p-password.ng-dirty.ng-invalid {
+  @apply border border-danger;
+}
+
+#input-id-select .p-dropdown {
+  @apply w-full h-standard-height rounded-l-md rounded-r-none;
+}
+
+#input-id-text {
+  @apply w-full h-standard-height rounded-r-md rounded-l-none;
+}
+
+.p-inputtext:enabled:hover,
+.p-dropdown:not(.p-disabled):hover,
+.p-multiselect:not(.p-disabled):hover,
+.p-textarea:not(.p-disabled):hover {
+  @apply shadow-md;
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+  @apply shadow-md;
+}
+
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):focus{
+  @apply shadow-md;
+}
+
+.p-datepicker:not(.p-datepicker-inline){
+  @apply shadow-md;
+}

@@ -1,0 +1,29 @@
+<p-confirmPopup key="popup">
+  <ng-template pTemplate="headless" let-message>
+    <div class="border-round p-3">
+      <span class="pb-1 pt-2">{{ message.message }}</span>
+      <div class="flex align-items-center justify-end gap-1 mt-3">
+        <p-button
+          (onClick)="rejectPopUp()"
+          [label]="message.rejectLabel"
+          size="small"
+          [text]="true"
+          [styleClass]="
+            message.rejectButtonStyleClass ??
+            'text-danger border-0'
+          "
+        />
+        <p-button
+          (onClick)="acceptPopUp()"
+          [label]="message.acceptLabel"
+          size="small"
+          [text]="true"
+          [styleClass]="
+            message.acceptButtonStyleClass ??
+            'text-primary-500 border-0'
+          "
+        />
+      </div>
+    </div>
+  </ng-template>
+</p-confirmPopup>

@@ -1,0 +1,115 @@
+<!-- <p-button
+  (onClick)="collapsed = !collapsed"
+  icon="pi pi-arrow-right"
+></p-button> -->
+
+<aside class="flex w-full sticky-top">
+  <div
+    class="flex flex-col h-screen text-white transition-width ease-in-out duration-500"
+    [ngClass]="{ 'w-48': !collapsed, 'w-16': collapsed }"
+  >
+    <div class="flex items-center justify-center py-3 h-100">
+      <img
+        [src]="IMG.IMG_LOGO"
+        [alt]="IMG.IMG_LOGO"
+        class="transition-all duration-300 ease"
+        [ngClass]="{ 'w-[2.5rem]': collapsed, 'w-[5rem]': !collapsed }"
+      />
+    </div>
+    <div
+      class="flex justify-center gap-4 pb-3"
+      [ngClass]="{ 'pt-1': collapsed, 'pt-0': !collapsed }"
+    >
+      <i
+        class="pi pi-circle-fill text-[9px]"
+        [ngClass]="{
+          'text-primary transition-colors duration-300 ease-in-out': collapsed,
+          'text-black transition-colors duration-300 ease-in-out': !collapsed
+        }"
+      >
+      </i>
+
+      <i
+        *ngIf="!collapsed"
+        class="pi pi-circle-fill text-[9px]"
+        [ngClass]="{
+          'text-primary transition-colors duration-300 ease-in-out': !collapsed
+        }"
+      >
+      </i>
+      <i *ngIf="!collapsed" class="pi pi-circle-fill text-[9px] text-black"></i>
+    </div>
+    <p-tieredMenu
+      [model]="menu$ | async"
+      class="pd"
+      [styleClass]="
+        collapsed
+          ? 'w-16 border-none transition-width ease-in-out duration-500'
+          : 'w-48 border-none transition-width ease-in-out duration-500'
+      "
+    >
+      <ng-template pTemplate="item" let-item let-hasSubmenu="hasSubmenu">
+        <a
+          pRipple
+          class="flex p-menuitem-link py-0 px-2 items-center rounded-md"
+          [ngClass]="{ 'bg-primary-100 rounded-md': isActive(item) }"
+          [routerLink]="
+            !(item.items && item.items.length) > 0 ? item.routerLink : null
+          "
+          (click)="onClickMenuItem(item)"
+        >
+          <span
+            [class]="item.icon + (hasSubmenu ? ' submenu-icon' : '')"
+            class="p-menuitem-icon m-0"
+            [ngClass]="{
+              'flex justify-start': !item.absoluteFather,
+              'w-full flex justify-center': collapsed && item.absoluteFather,
+              'text-dark-600': !isActive(item),
+              'text-primary-500': isActive(item)
+            }"
+          >
+          </span>
+          <span
+            *ngIf="!collapsed || !item.absoluteFather"
+            class="ml-3 text-dark-800 text-sm"
+            [ngClass]="{ 'text-primary-500': isActive(item) }"
+            >{{ item.label }}</span
+          >
+          <i
+            *ngIf="
+              hasSubmenu && (!collapsed || (collapsed && !item.absoluteFather))
+            "
+            class="p-menuitem-icon pi pi-angle-right ml-auto submenu-icon"
+            [ngClass]="{ 'text-primary-500': isActive(item) }"
+          ></i>
+        </a>
+      </ng-template>
+    </p-tieredMenu>
+  </div>
+</aside>
+
+<!-- sidebar with material icons -->
+<!-- <div class="flex w-full sticky-top">
+    <div class="flex flex-col h-screen text-white transition-width ease-in-out duration-500"
+        [ngClass]="{'w-48': !collapsed, 'w-20': collapsed}">
+        <div class="flex items-center justify-center h-16 mb-3">
+            <img [src]="IMG.IMG_LOGO" [alt]="IMG.IMG_LOGO" width="50">
+        </div>
+        <p-tieredMenu [model]="menu$ | async" class="pd"
+            [styleClass]="collapsed ? 'w-20 border-none transition-width ease-in-out duration-500' : 'w-48 border-none transition-width ease-in-out duration-500'">
+            <ng-template pTemplate="item" let-item let-hasSubmenu="hasSubmenu">
+                <a pRipple class="flex p-menuitem-link py-0 px-2 items-center rounded-md" [ngClass]="{'bg-primary-100 rounded-md' : isActive(item)}"
+                    [routerLink]="!(item.items && item.items.length) > 0 ? item.routerLink : null">
+                    <span class="material-icons-outlined p-menuitem-icon m-0"
+                        [ngClass]="{'flex justify-start' : !item.absoluteFather,'w-full flex justify-center' :collapsed && item.absoluteFather,  'text-dark-600' : !isActive(item), 'text-primary-500' : isActive(item) }">
+                        {{ item.icon }}
+                    </span>
+                    <span *ngIf="!collapsed || !item.absoluteFather" class="ml-3 text-dark-800 text-sm"
+                        [ngClass]="{'text-primary-500' : isActive(item)}">{{ item.label }}</span>
+                    <i *ngIf="hasSubmenu && (!collapsed || (collapsed && !item.absoluteFather))" class="p-menuitem-icon pi pi-angle-right ml-auto submenu-icon"
+                        [ngClass]="{'text-primary-500' : isActive(item)}"></i>
+                </a>
+            </ng-template>
+        </p-tieredMenu>
+    </div>
+</div> -->

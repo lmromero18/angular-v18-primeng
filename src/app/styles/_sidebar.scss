@@ -1,0 +1,43 @@
+.pd .p-menuitem {
+    @apply p-2 min-h-[40px];
+}
+
+.pd .p-menuitem-link {
+    @apply min-h-[40px];
+}
+
+.p-tieredmenu .p-menuitem.p-highlight>.p-menuitem-content {
+    @apply rounded;
+}
+
+.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover {
+    @apply rounded;
+}
+
+.sidebar {
+    @apply flex flex-col h-full p-4 bg-gray-800 text-white;
+}
+
+.sidebar img {
+    @apply h-8;
+}
+
+.sidebar nav ul {
+    @apply mt-4;
+}
+
+.sidebar nav ul li {
+    @apply mb-2;
+}
+
+.sidebar nav ul li a {
+    @apply flex items-center p-2 rounded hover:bg-gray-700 text-primary-500;
+}
+
+.sidebar nav ul li a i {
+    @apply mr-3;
+}
+
+.submenu-icon {
+    @apply text-lg;
+}

@@ -1,0 +1,6 @@
+{
+  "URL_BASE_API": "http://localhost:8000",
+  "URL_AUTH_API": "https://btc.com.ve:8089",
+  "URL_BASE_REPORT": "https://compliance.bankingtech.com.ve:8092",
+  "BPAY_KEY":"MzkzY2YxOWQtM2JkYi00M2U1LWIzYzktNTY0NWI5NjFjMGIw"
+}

@@ -1,0 +1,64 @@
+<label
+  [htmlFor]="data?.name"
+  class="font-medium pb-[0.15rem] text-[14px] ps-2 pe-1 text-dark-900 flex items-center justify-between w-full"
+>
+  <div>
+    <span>{{ data.parentLabel }}</span>
+    <small *ngIf="hasRequiredValidator()" class="text-danger"> *</small>
+  </div>
+  <span
+    class="material-icons-sharp cursor-pointer mb-1 hover:text-primary-500 text-[14px] text-dark-700"
+    pTooltip="{{ data.info }}"
+    *ngIf="data?.info"
+  >
+    info
+  </span>
+</label>
+<span class="p-input-icon-right w-full">
+  <p-inputNumber
+    [id]="data.getName(isForm)"
+    locale="es-ES"
+    [name]="data.getName(isForm)"
+    [placeholder]="data.placeholder ?? data.parentLabel"
+    class="rounded-md w-full grid"
+    [(ngModel)]="data.value"
+    [class.ng-invalid]="isInvalid()"
+    (blur)="data.formControl.markAsTouched({ onlySelf: true })"
+    [disabled]="isForm && (forceReadOnly || data.readonly)"
+    [minFractionDigits]="data.integerOnly ? null : data.minFractionDigits ?? 2"
+    [maxFractionDigits]="data.integerOnly ? null : data.maxFractionDigits ?? 2"
+    mode="decimal"
+    [inputId]="data.integerOnly ? 'integeronly' : 'decimal'"
+    [prefix]="data.prefix ? data.prefix + ' ' : ''"
+    [suffix]="data.suffix ? ' ' + data.suffix : ''"
+  />
+  <i
+    class="material-icons-sharp text-green-500 text-[16px]"
+    *ngIf="
+      isForm &&
+      data?.value &&
+      !data.formControl.invalid &&
+      (data.formControl.pristine || !data.formControl.touched)
+    "
+  >
+    check_circle
+  </i>
+  <i
+    *ngIf="
+      data.formControl.invalid &&
+      (data.formControl.dirty || data.formControl.touched)
+    "
+    class="material-icons-sharp text-red-500 text-[16px]"
+    >error</i
+  >
+</span>
+
+<div *ngIf="data.formControl.touched">
+  <div
+    [id]="data?.name"
+    *ngFor="let error of data.formControl.errors | keyvalue; trackBy: trackById"
+    [translateParams]="error.value"
+    [translate]="'validations.' + error.key"
+    class="text-red-500 m-1 text-[13px]"
+  ></div>
+</div>

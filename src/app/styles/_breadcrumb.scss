@@ -1,0 +1,11 @@
+.p-breadcrumb .p-menuitem-link {
+    cursor: pointer;
+}
+
+.p-menuitem-text:hover {
+    @apply text-primary;
+}
+
+.p-menuitem-icon:hover {
+    @apply text-primary;
+}

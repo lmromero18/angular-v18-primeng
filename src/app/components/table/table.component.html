@@ -1,0 +1,101 @@
+<div class="p-3 mx-auto">
+  <div class="px-3 bg-white rounded h-[90vh] shadow-md">
+
+    <app-table-header [model]="model"></app-table-header>
+
+    <p-skeleton [width]="'100%'" height="80vh" *ngIf="model.loading" />
+
+    <p-table [value]="model.items" [customSort]="true"
+      styleClass="max-h-[70vh] overflow-auto rounded-md shadow-md hover:shadow-none transition-shadow duration-300"
+      [scrollable]="true">
+      <ng-template pTemplate="header">
+        <tr *ngIf="model.getActionButtons().length > 0 && model.items.length > 0">
+          <th scope="col" nowrap pFrozenColumn>
+            {{ model.getActionButtons().length == 1 ? "Acción" : "Acciones" }}
+          </th>
+          <th *ngFor="let attr of model.listables(); let i = index"
+            class="cursor-pointer text-center align-middle px-2 py-1" nowrap>
+            {{ attr.label }}
+            <p-sortIcon pSortableColumn="{{ attr.name }}" [field]="attr.name" (click)="
+      attr.sortable_name && model.items.length > 0
+        ? orderBy(attr.name, this.order.sort)
+        : null
+    " class="text-sm align-middle inline-block"></p-sortIcon>
+            <p-columnFilter *ngIf="attr.filtrable" class="m-auto text-sm align-middle inline-block" [field]="attr.name"
+              display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" [id]="attr.name">
+              <ng-template pTemplate="filter">
+                <app-single-filter-input-selector [isForm]="false" [filter]="attr.input" [model]="model"
+                  (filterApplied)="closeFilterAndSearch(false, attr)"></app-single-filter-input-selector>
+                <div class="flex justify-between gap-2 pt-4 pb-2">
+                  <p-button [label]="'Limpiar'" (click)="closeFilterAndSearch(true, attr)" tooltipPosition="top"
+                    [outlined]="true" size='small' 
+                    />
+                    <p-button [label]="'Aplicar'" (click)="closeFilterAndSearch(false, attr)" tooltipPosition="top"
+                      size='small' class=" bg-primary-500 text-white hover:bg-primary-600" 
+                      />
+                </div>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr *ngIf="!model.loading">
+          <td *ngIf="model.getActionButtons().length > 0 && model.items.length > 0" nowrap pFrozenColumn>
+            <div class="px-2 flex-nowrap flex justify-start rounded-full">
+              <ng-container *ngFor="
+                let button of model.getActionButtons();
+                trackBy: trackByButton
+              ">
+                <div [pTooltip]="button.tooltip && button.tooltip(item)" tooltipPosition="top">
+                  <p-button *ngIf="
+                    button.can(item) &&
+                    authService.isPermissionAssigned(
+                      model.getPermission(button.name)
+                    )
+                  " [styleClass]="button.class && button.class(item)" [disabled]="button.disable(item)"
+                    [rounded]="true" size='small' [routerLink]="
+                    button.link && !button.disable(item)
+                      ? button.link(item)
+                      : []
+                  " (click)="handleButtonClick($event, button, item)" [label]="button.text && button.text(item)"
+                    [icon]="button.icon && button.icon(item)" [html]="button.html && button.html(item)"></p-button>
+                </div>
+                <span *ngIf="button.html" [innerHTML]="button.html(item)"></span>
+              </ng-container>
+            </div>
+          </td>
+          <td *ngFor="let name of model.names(); trackBy: trackById" scope="col" class="position-relative" nowrap>
+            <span [class]="
+              model.getCssClass(name) ? model.getCssClass(name) : 'text-left'
+            " [innerHTML]="model.getter(item, name)" [ngbTooltip]="model.tooltip(item, name)" container="body">
+              {{ item[name] }}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="model.loading">
+          <td class="columns-3 gap-1">
+            <p-skeleton [width]="'40%'" height="2rem" />
+            <p-skeleton [width]="'40%'" height="2rem" />
+            <p-skeleton [width]="'40%'" height="2rem" />
+          </td>
+          <td *ngFor="let col of [].constructor(model.listables().length)">
+            <p-skeleton [width]="'100%'" height="2rem" />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <app-paginator *ngIf="hasPagination && model.items.length > 0" [model]="model"></app-paginator>
+
+    <!-- not found -->
+    <div *ngIf="model.items.length === 0 && !model.loading" class="flex justify-center py-4">
+      <div>
+        <img src="assets/images/no-data.svg" alt="team-create.svg" class="max-h-[320px]" />
+        <div class="text-primary-600 text-center pt-1">
+          No se han encontrado registros.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

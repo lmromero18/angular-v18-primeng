@@ -1,0 +1,97 @@
+<label
+  [htmlFor]="data?.name"
+  class="font-medium pb-[0.15rem] text-[14px] ps-2 pe-1 text-dark-900 flex items-center justify-between w-full"
+>
+  <div>
+    <span>{{ data.parentLabel }}</span>
+    <small *ngIf="hasRequiredValidator()" class="text-danger"> *</small>
+  </div>
+  <span
+    class="material-icons-sharp cursor-pointer mb-1 hover:text-primary-500 text-[14px] text-dark-700"
+    pTooltip="{{ data.info }}"
+    *ngIf="data?.info"
+  >
+    info
+  </span>
+</label>
+<div class="flex">
+  <span class="p-field w-fit rounded-r-lg">
+    <p-dropdown
+      *ngIf="!data?.multiple"
+      id="input-id-select"
+      class="rounded-r-lg"
+      [disabled]="isForm && (forceReadOnly || data?.readonly || data?.disabled)"
+      filterBy="name"
+      [(ngModel)]="tiIdentificacion"
+      [options]="this.optionsData"
+      optionLabel="name"
+      [showClear]="false"
+      [placeholder]="data.placeholder"
+      (onChange)="onChange()"
+      [class.ng-invalid]="
+        data?.formControl?.invalid &&
+        (data?.formControl?.dirty ||
+          (data?.formControl?.touched && !inputData?.value))
+      "
+      variant="filled"
+      [class.is-invalid]="
+        data?.formControl?.invalid &&
+        (data?.formControl?.dirty ||
+          (data?.formControl?.touched && !inputData?.value))
+      "
+      (onBlur)="data?.formControl?.markAsTouched({ onlySelf: true })"
+    >
+    </p-dropdown>
+  </span>
+  <span class="p-input-icon-right w-full">
+    <input
+      id="input-id-text"
+      [name]="data?.getName(isForm)"
+      [placeholder]="data.placeholder"
+      type="text"
+      pInputText
+      [pKeyFilter]="this?.keyFilter ? this.keyFilter : null"
+      [(ngModel)]="nuIdentificacion"
+      (input)="onChange()"
+      [attr.readonly]="
+        isForm && (forceReadOnly || data.readonly) ? 'readonly' : null
+      "
+      (blur)="data.formControl.markAsTouched({ onlySelf: true })"
+      [maxlength]="this.max"
+      [disabled]="isForm && (forceReadOnly || data.readonly || data?.disabled)"
+      [class.is-invalid]="
+        data.formControl.invalid &&
+        (data.formControl.dirty || data.formControl.touched)
+      "
+    />
+    <i
+      class="material-icons-sharp text-green-500 text-[16px]"
+      *ngIf="
+        isForm &&
+        data?.value &&
+        !data.formControl.invalid &&
+        (data.formControl.pristine || !data.formControl.touched)
+      "
+    >
+      check_circle
+    </i>
+    <i
+      *ngIf="
+        data.formControl.invalid &&
+        (data.formControl.dirty || data.formControl.touched)
+      "
+      class="material-icons-sharp text-red-500 text-[16px]"
+      >error</i
+    >
+  </span>
+</div>
+
+<div *ngIf="data.formControl.touched">
+  <div
+    [id]="data?.name"
+    *ngFor="let error of data.formControl.errors | keyvalue; trackBy: trackById"
+    [translateParams]="error.value"
+    [translate]="'validations.' + error.key"
+    class="text-red-500 m-1 text-[13px]"
+  ></div>
+</div>

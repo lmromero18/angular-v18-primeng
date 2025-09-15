@@ -1,0 +1,17 @@
+<div class="flex h-screen w-full">
+  <div>
+    <app-sidebar
+      [collapsed]="toggler"
+      (menuItemSelected)="this.menuItemSelected = $event"
+    ></app-sidebar>
+  </div>
+  <main class="h-full flex-grow overflow-auto bg-dark-50">
+    <div class="h-full overflow-auto">
+      <app-header
+        (togglerEvent)="getToggleSidebar($event)"
+        [menuItemSelected]="menuItemSelected"
+      ></app-header>
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

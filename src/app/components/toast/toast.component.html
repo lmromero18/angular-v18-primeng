@@ -1,0 +1,28 @@
+<p-toast position="top-right">
+  <ng-template let-message pTemplate="message">
+    <section class="flex gap-3 w-full">
+      <div class="flex gap-2">
+        <span
+          class="material-icons"
+          [ngClass]="{
+            'text-primary-500': message.severity == 'info',
+            'text-warning-500': message.severity == 'warn',
+            'text-danger-500': message.severity == 'error'
+          }"
+        >
+          {{ getIcon(message.severity) }}
+        </span>
+      </div>
+      <div class="w-full">
+        <div class="flex justify-between w-full">
+          <p class="m-0 font-semibold">
+            {{ message.summary }}
+          </p>
+        </div>
+        <p class="m-0 text-700 text-[12px] text-dark-900 font-semibold">
+          {{ message.detail }}
+        </p>
+      </div>
+    </section>
+  </ng-template>
+</p-toast>

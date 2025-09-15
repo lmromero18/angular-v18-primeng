@@ -1,0 +1,19 @@
+.p-toast {
+    max-width: 16rem;
+    min-width: fit-content;
+}
+
+.p-toast .p-toast-message {
+    border: none !important;
+    background-color: white;
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    padding-top: 0.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+.p-toast-summary {
+    @apply text-dark-900;
+    font-family: inherit;
+}

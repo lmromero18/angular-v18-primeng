@@ -1,0 +1,64 @@
+<div class="flex items-center justify-between overflow-x-auto py-3 w-full">
+    <div class="flex justify-end gap-2 w-max md:w-full">
+        <!-- REFRESH BUTTON -->
+        <p-button icon="pi pi-refresh" (click)="model.all()" pTooltip="Refrescar" tooltipPosition="top"
+            [outlined]="true" size='small' />
+
+        <!-- DOWNLOAD BUTTON -->
+        <div *ngIf="model.canDownload() && model.actions['download']?.allowedTypes" pTooltip="Descargar"
+            tooltipPosition="top">
+            <p-menu [model]="downloadMenuItems" [popup]="true" #menu></p-menu>
+            <p-button [outlined]="true" size='small' [routerLink]="
+        model.downloadButton.link ? model.downloadButton.link() : []
+      " (click)="menu.toggle($event)" [tooltip]="model.downloadButton.tooltip()" [icon]="model.downloadButton.icon()">
+            </p-button>
+        </div>
+
+        <!-- HIDE COLUMNS BUTTON -->
+        <p-button icon="pi pi-eye-slash" (click)="hideCols.toggle($event)" pTooltip="Ocultar columnas"
+            tooltipPosition="top" [outlined]="true" size='small' />
+        <p-overlayPanel #hideCols>
+            <h5 class="m-0 mb-3 text-center">Columnas</h5>
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterColumns()"
+                placeholder="Buscar columna..." class="p-inputtext p-component w-full mb-3" />
+            <div class="flex flex-col gap-3 overflow-auto max-h-[70vh]">
+                <div *ngFor="let attr of filteredColumns; let i = index" class="flex items-center gap-2">
+                    <p-checkbox [value]="attr.name" (onChange)="hideColumns(attr.name, $event)" [binary]="true"
+                        [(ngModel)]="attr.checked"></p-checkbox>
+                    <span class="text-[13px]">{{ attr.label }}</span>
+                </div>
+            </div>
+        </p-overlayPanel>
+
+        <!-- SHOW FILTER BUTTON -->
+        <p-button icon="pi pi-filter" (click)="filters.toggle($event)" pTooltip="Ver filtros" tooltipPosition="top"
+            [outlined]="true" [label]="'Filtros'" size='small' />
+        <p-overlayPanel #filters>
+            <app-filters [model]="model" (filtersApplied)="applyFilters(false)"></app-filters>
+            <div class="flex justify-end gap-2 pt-4 md:pt-2 ">
+                <p-button [label]="'Limpiar'" (click)="clearAllFilters()" pTooltip="Limpiar filtros"
+                    tooltipPosition="top" [outlined]="true" size="small" />
+                <p-button [label]="'Aplicar'" (click)="applyFilters()" pTooltip="Ver filtros" tooltipPosition="top"
+                    styleClass="bg-primary-500 text-white hover:bg-primary-600" size="small" />
+            </div>
+        </p-overlayPanel>
+
+        <!-- <p-button icon="pi pi-filter-slash" (click)="clearAllFiltersAndSearch()" pTooltip="Limpiar filtros"
+            tooltipPosition="top" /> -->
+
+        <!-- CREATE BUTTON -->
+        <p-button *ngIf="
+          model.canCreate() &&
+          authService.isPermissionAssigned(model.getPermission('create'))
+      " [routerLink]="model.createButton.link && model.createButton.link()"
+            [label]="model.createButton.text && model.createButton.text()" [styleClass]="
+          model.createButton.class !== '' && model.createButton.class()
+      " [disabled]="
+          model.createButton?.disable && model.createButton?.disable()
+      " [icon]="model?.createButton?.icon && model?.createButton?.icon()" (click)="
+          model.createButton.link
+          ? model.createButton.link()
+          : model.createButton.click && model.createButton.click()
+      " size='small'></p-button>
+    </div>
+</div>

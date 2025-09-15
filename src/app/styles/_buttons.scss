@@ -1,0 +1,33 @@
+.p-button-text {
+    outline: none;
+    box-shadow: none;
+}
+
+.p-button{
+    @apply rounded;
+}
+
+// button {
+//     @apply h-standard-height;
+// }
+
+.p-button-label{
+    font-weight: normal !important;
+}
+
+// .p-button:not(:disabled):hover {
+//     @apply bg-primary-600 text-white border-0;
+// }
+
+/* Estilo para botones deshabilitados */
+button:disabled {
+    cursor: not-allowed;
+}
+
+.p-button-label {
+    font-family: 'Fira Sans';
+}
+
+button:focus{
+    box-shadow:none;
+}

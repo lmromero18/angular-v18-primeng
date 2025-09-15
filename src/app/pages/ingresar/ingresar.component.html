@@ -1,0 +1,55 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div
+    class="bg-white shadow-lg rounded-lg flex overflow-hidden max-w-4xl w-full"
+  >
+    <!-- Lado izquierdo con la ilustración -->
+    <div
+      class="hidden md:flex md:w-1/2 bg-blue-500 p-8 items-center justify-center"
+    >
+      <img [src]="IMG.IMG_LOGIN" alt="Illustration" class="w-full h-auto" />
+    </div>
+
+    <!-- Lado derecho con el formulario -->
+    <div class="w-full md:w-1/2 p-8 bg-blue-50 text-white flex flex-col">
+      <h2 class="text-2xl font-bold text-black mb-6">Inicio de sesión</h2>
+
+      <!-- Aquí usamos flex-grow para ocupar el espacio restante y centrar verticalmente -->
+      <form
+        (ngSubmit)="onSubmit()"
+        class="space-y-4 flex-grow flex flex-col justify-center"
+      >
+        <app-input-id
+          [data]="this.model.getAttribute('va_full_id').input"
+          [class]="
+            this.model.getAttribute('va_full_id').input.container_class
+              ? this.model.getAttribute('va_full_id').input.container_class
+              : 'w-full'
+          "
+        >
+        </app-input-id>
+
+        <app-input-password
+          [data]="this.model.getAttribute('password').input"
+          [class]="
+            this.model.getAttribute('password').input.container_class
+              ? this.model.getAttribute('password').input.container_class
+              : 'w-full'
+          "
+        >
+        </app-input-password>
+
+        <div class="flex items-center justify-between mt-4">
+          <button
+            pButton
+            type="submit"
+            class="font-semibold px-4 py-2 rounded w-full"
+            [disabled]="model.loading || model.form.invalid"
+          >
+            <i *ngIf="model.loading" class="pi pi-spin pi-spinner"></i>
+            <span class="w-full">Ingresar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

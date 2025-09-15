@@ -1,0 +1,52 @@
+<ng-container [ngSwitch]="filter.getType(isForm)">
+  <app-input-text
+    *ngSwitchCase="'text'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-input-text>
+
+  <app-input-id
+    *ngSwitchCase="'id'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-input-id>
+
+  <app-input-select
+    *ngSwitchCase="'select'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-input-select>
+
+  <app-multi-select
+    *ngSwitchCase="'multi-select'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-multi-select>
+
+  <app-input-numeric
+    *ngSwitchCase="'numeric'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-input-numeric>
+
+  <app-input-calendar
+    *ngSwitchCase="'calendar'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-input-calendar>
+
+  <app-input-mask
+    *ngSwitchCase="'mask'"
+    [data]="filter"
+    (keyup.enter)="onKeyUp()"
+    [isForm]="isForm"
+  ></app-input-mask>
+
+  <ng-container *ngSwitchDefault></ng-container>
+</ng-container>

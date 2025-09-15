@@ -1,0 +1,74 @@
+<label
+  [htmlFor]="data?.name"
+  class="font-medium pb-[0.15rem] text-[14px] ps-2 pe-1 text-dark-900 flex items-center justify-between w-full"
+>
+  <div>
+    <span>{{ data.parentLabel }}</span>
+    <small *ngIf="hasRequiredValidator()" class="text-danger"> *</small>
+  </div>
+  <span
+    class="material-icons-sharp cursor-pointer mb-1 hover:text-primary-500 text-[14px] text-dark-700"
+    pTooltip="{{ data.info }}"
+    *ngIf="data?.info"
+  >
+    info
+  </span>
+</label>
+<p-multiSelect
+  *ngIf="this.items"
+  [id]="data?.getName(isForm)"
+  [name]="data?.getName(isForm)"
+  [disabled]="isDisabled()"
+  [(ngModel)]="this.inputData"
+  [options]="this.items"
+  optionLabel="name"
+  [showClear]="false"
+  [placeholder]="data.placeholder"
+  [selectedItemsLabel]="this.inputData?.length + ' elementos seleccionados'"
+  (onChange)="event($event.value)"
+  [class.ng-invalid]="isInvalid()"
+  (onBlur)="data?.formControl?.markAsTouched({ onlySelf: true })"
+  [showClear]="true"
+  (onClear)="onClearDropdown()"
+  [group]="haveAgroupation"
+  optionLabel="name"
+  optionGroupLabel="name"
+  optionGroupChildren="items"
+  [loading]="!this.items.length > 0"
+>
+  <ng-template pTemplate="dropdownicon">
+    <span
+      class="material-icons ms-3 mt-1"
+      *ngIf="!data.formControl.touched || !isForm"
+      >arrow_drop_down</span
+    >
+    <i
+      class="material-icons-sharp text-green-500 text-[16px] ms-3 mt-1"
+      *ngIf="
+        isForm &&
+        data?.value &&
+        !data.formControl.invalid &&
+        (data.formControl.pristine || !data.formControl.touched)
+      "
+    >
+      check_circle
+    </i>
+    <i
+      *ngIf="
+        data.formControl.invalid &&
+        (data.formControl.dirty || data.formControl.touched)
+      "
+      class="material-icons-sharp text-red-500 text-[16px] ms-3 mt-1"
+      >error</i
+    >
+  </ng-template>
+</p-multiSelect>
+<div *ngIf="data.formControl.touched">
+  <div
+    [id]="data?.name"
+    *ngFor="let error of data.formControl.errors | keyvalue; trackBy: trackById"
+    [translateParams]="error.value"
+    [translate]="'validations.' + error.key"
+    class="text-red-500 m-1 text-[13px]"
+  ></div>
+</div>
